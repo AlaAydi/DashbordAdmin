@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // project import
-import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { CardComponent } from './components/card/card.component';
 
 // third party
@@ -21,7 +20,6 @@ import { NgbDropdownModule, NgbNavModule, NgbModule } from '@ng-bootstrap/ng-boo
     FormsModule,
     ReactiveFormsModule,
     CardComponent,
-    BreadcrumbComponent,
     NgbDropdownModule,
     NgbNavModule,
     NgbModule,
@@ -32,7 +30,6 @@ import { NgbDropdownModule, NgbNavModule, NgbModule } from '@ng-bootstrap/ng-boo
     FormsModule,
     ReactiveFormsModule,
     CardComponent,
-    BreadcrumbComponent,
     NgbModule,
     NgbDropdownModule,
     NgbNavModule,
