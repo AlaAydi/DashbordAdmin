@@ -12,4 +12,10 @@ import { SharedModule } from 'src/app/theme/shared/shared.module';
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss']
 })
-export default class SignUpComponent {}
+export default class SignUpComponent {
+role: 'patient' | 'doctor' = 'patient';
+
+setRole(value: 'patient' | 'doctor') {
+  this.role = value;
+}
+}

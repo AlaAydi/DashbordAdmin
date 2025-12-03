@@ -30,7 +30,7 @@ export const NavigationItems: NavigationItem[] = [
         id: 'dashboard',
         title: 'Dashboard',
         type: 'item',
-        url: '/admin/dashboard',
+        url: '/analytics',
         icon: "fa fa-lock"
       },
       {
