@@ -1,3 +1,16 @@
 <div class="calendar-container">
   <full-calendar [options]="calendarOptions"></full-calendar>
+
+  <!-- Modal moderne -->
+  <div class="modal" *ngIf="showModal">
+    <div class="modal-content">
+      <h2>{{ modalTitle }}</h2>
+      <input type="text" [(ngModel)]="patientName" placeholder="Nom du patient" />
+      <div class="modal-actions">
+        <button class="btn btn-primary" (click)="saveEvent()">Enregistrer</button>
+        <button class="btn btn-danger" *ngIf="modalAction === 'edit'" (click)="deleteEvent()">Supprimer</button>
+        <button class="btn btn-secondary" (click)="closeModal()">Annuler</button>
+      </div>
+    </div>
+  </div>
 </div>
