@@ -19,7 +19,12 @@ const routes: Routes = [
       {
         path: 'analytics',
         loadComponent: () => import('./demo/dashboard/dash-analytics.component')
-      },
+      }, 
+      {
+  path: 'admin/calendar',
+  loadComponent: () => import('./theme/layout/admin/calender/calender.component').then(m => m.CalenderComponent)
+}
+,
       {
         path: 'component',
         loadChildren: () => import('./demo/ui-element/ui-basic.module').then((m) => m.UiBasicModule)

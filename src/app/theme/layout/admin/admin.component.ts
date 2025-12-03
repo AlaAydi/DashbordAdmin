@@ -6,10 +6,11 @@ import { CommonModule, Location, LocationStrategy } from '@angular/common';
 // Project Import
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { NavigationComponent } from './navigation/navigation.component';
+import { CalenderComponent } from './calender/calender.component';
 
 @Component({
   selector: 'app-admin',
-  imports: [RouterModule, NavBarComponent, NavigationComponent, CommonModule,],
+  imports: [RouterModule, NavBarComponent, NavigationComponent, CommonModule,CalenderComponent],
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss']
 })
@@ -17,12 +18,10 @@ export class AdminComponent {
   private location = inject(Location);
   private locationStrategy = inject(LocationStrategy);
 
-  // public props
   navCollapsed!: boolean;
   navCollapsedMob: boolean;
   windowWidth: number;
 
-  // constructor
   constructor() {
     this.windowWidth = window.innerWidth;
     this.navCollapsedMob = false;
