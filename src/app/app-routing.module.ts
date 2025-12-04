@@ -29,6 +29,10 @@ const routes: Routes = [
   path: 'admin/patients',
   loadComponent: () => import('./theme/layout/admin/patient/patient.component').then(m => m.PatientComponent)
 } , 
+{
+  path: 'admin/doctors',
+  loadComponent: () => import('./theme/layout/admin/doctor/doctor.component').then(m => m.DoctorComponent)
+} , 
       {
         path: 'component',
         loadChildren: () => import('./demo/ui-element/ui-basic.module').then((m) => m.UiBasicModule)

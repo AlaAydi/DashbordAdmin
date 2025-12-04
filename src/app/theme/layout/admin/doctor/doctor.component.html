@@ -1,0 +1,83 @@
+<div class="doctor-container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <h2 class="title">Liste des Médecins</h2>
+    <button class="btn primary" (click)="openDoctorModal()">+ Ajouter un médecin</button>
+  </div>
+
+  <!-- TABLE PREMIUM -->
+  <div class="table-wrapper">
+    <table class="doctor-table">
+      <thead>
+        <tr>
+          <th>Médecin</th>
+          <th>Spécialité</th>
+          <th>Horaires</th>
+          <th>Téléphone</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let d of doctors">
+          <td class="doctor-info">
+            <img [src]="d.image" />
+            <span>{{ d.name }}</span>
+          </td>
+
+          <td>{{ d.specialty }}</td>
+          <td>{{ d.schedule }}</td>
+          <td>{{ d.phone }}</td>
+
+          <td class="actions">
+            <button class="btn small info" (click)="openDoctorModal(d)">Modifier</button>
+            <button class="btn small danger" (click)="deleteDoctor(d.id)">Supprimer</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- MODAL AJOUT / MODIFICATION -->
+<div class="modal-overlay" *ngIf="showDoctorModal">
+  <div class="modal-box form-modal">
+    <h3 class="modal-title">
+      {{ selectedDoctor ? "Modifier Médecin" : "Ajouter Médecin" }}
+    </h3>
+
+    <form (ngSubmit)="saveDoctor()">
+
+      <div class="form-group">
+        <input type="text" [(ngModel)]="tempDoctor.name" name="name" required />
+        <label>Nom</label>
+      </div>
+
+      <div class="form-group">
+        <input type="text" [(ngModel)]="tempDoctor.specialty" name="specialty" required />
+        <label>Spécialité</label>
+      </div>
+
+      <div class="form-group">
+        <input type="text" [(ngModel)]="tempDoctor.phone" name="phone" required />
+        <label>Téléphone</label>
+      </div>
+
+      <div class="form-group">
+        <input type="text" [(ngModel)]="tempDoctor.schedule" name="schedule" required />
+        <label>Horaires</label>
+      </div>
+
+      <label class="custom-file-upload">
+        <input type="file" (change)="uploadImage($event)" />
+        Charger une photo
+      </label>
+
+      <div class="modal-buttons">
+        <button class="btn primary" type="submit">Enregistrer</button>
+        <button class="btn neutral" type="button" (click)="closeDoctorModal()">Annuler</button>
+      </div>
+    </form>
+  </div>
+</div>
