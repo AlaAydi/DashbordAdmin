@@ -6,11 +6,10 @@ import { CommonModule, Location, LocationStrategy } from '@angular/common';
 // Project Import
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { NavigationComponent } from './navigation/navigation.component';
-import { CalenderComponent } from './calender/calender.component';
 
 @Component({
   selector: 'app-admin',
-  imports: [RouterModule, NavBarComponent, NavigationComponent, CommonModule,CalenderComponent],
+  imports: [RouterModule, NavBarComponent, NavigationComponent, CommonModule],
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss']
 })

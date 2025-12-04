@@ -25,6 +25,10 @@ const routes: Routes = [
   loadComponent: () => import('./theme/layout/admin/calender/calender.component').then(m => m.CalenderComponent)
 }
 ,
+{
+  path: 'admin/patients',
+  loadComponent: () => import('./theme/layout/admin/patient/patient.component').then(m => m.PatientComponent)
+} , 
       {
         path: 'component',
         loadChildren: () => import('./demo/ui-element/ui-basic.module').then((m) => m.UiBasicModule)
