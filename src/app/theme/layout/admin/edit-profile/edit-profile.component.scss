@@ -1,0 +1,108 @@
+.edit-profile-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* prend exactement toute la hauteur de l'écran */
+  background: linear-gradient(135deg, #e0f0ff, #ffffff);
+  padding: 0 20px;
+  box-sizing: border-box;
+  overflow: hidden; /* empêche le scroll */
+}
+
+.profile-card {
+  width: 100%;          /* prend toute la largeur disponible */
+  max-width: 900px;     /* limite pour grands écrans */
+  height: auto;
+  background: #ffffff;
+  padding: 30px 25px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+
+  h2 {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a73e8;
+    margin-bottom: 25px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+
+      label {
+        font-weight: 600;
+        font-size: 14px;
+        color: #333;
+        margin-bottom: 6px;
+      }
+
+      input {
+        padding: 12px;
+        font-size: 16px;
+        border-radius: 10px;
+        border: 1px solid #d1d9e6;
+        transition: border 0.3s;
+
+        &:focus {
+          border-color: #1a73e8;
+          outline: none;
+        }
+      }
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      color: #fff;
+      background: linear-gradient(to right, #1a73e8, #4285f4);
+      transition: background 0.3s;
+
+      &:hover {
+        background: linear-gradient(to right, #4285f4, #1a73e8);
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .profile-card {
+    padding: 25px 20px;
+  }
+
+  form .form-group input {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  button {
+    font-size: 14px;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-card {
+    padding: 20px 15px;
+    border-radius: 15px;
+  }
+}

@@ -78,25 +78,41 @@ export const NavigationItems: NavigationItem[] = [
         url: '/admin/factures',
         icon: 'fa fa-receipt'
       },
-  
-    ]
-  },
-
- {
- id: 'charts',
-    title: 'Statistiques',
-    type: 'group',
-    icon: 'icon-group',
-    children: [
-      {
+        {
         id: 'apexchart',
         title: 'ApexChart',
         type: 'item',
         url: '/chart',
         icon: "fas fa-chart-bar" ,
-      }
+      } ,
+  
     ]
- }
+  },
+
+{
+  id: 'user_actions',
+  title: 'Mon Compte',
+  type: 'group',
+  icon: 'icon-group',
+  children: [
+
+    {
+      id: 'settings',
+      title: 'Paramètres',
+      type: 'item',
+      url: '/admin/settings',
+      icon: 'fa fa-cog'
+    },
+    {
+      id: 'logout',
+      title: 'Déconnexion',
+      type: 'item',
+      url: '/logout',
+      icon: 'fa fa-sign-out-alt'
+    }
+  ]
+}
+
    
 
 

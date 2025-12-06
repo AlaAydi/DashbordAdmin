@@ -37,11 +37,12 @@ const routes: Routes = [
   path: 'admin/factures',
   loadComponent: () => import('./theme/layout/admin/gestion-administrative/factures/factures.component').then(m => m.FacturesComponent)
 } , 
-
 {
-  path: 'admin/paiements',
-  loadComponent: () => import('./theme/layout/admin/gestion-administrative/paiements/paiements.component').then(m => m.PaiementsComponent)
+  path: 'admin/settings',
+  loadComponent: () => import('./theme/layout/admin/edit-profile/edit-profile.component').then(m => m.EditProfileComponent)
 } , 
+
+
       {
         path: 'component',
         loadChildren: () => import('./demo/ui-element/ui-basic.module').then((m) => m.UiBasicModule)
