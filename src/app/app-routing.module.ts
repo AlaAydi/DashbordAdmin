@@ -33,6 +33,10 @@ const routes: Routes = [
   path: 'admin/doctors',
   loadComponent: () => import('./theme/layout/admin/doctor/doctor.component').then(m => m.DoctorComponent)
 } , 
+{
+  path: 'admin/Consultations',
+  loadComponent: () => import('./theme/layout/admin/consultation/consultation.component').then(m => m.ConsultationComponent)
+} , 
       {
         path: 'component',
         loadChildren: () => import('./demo/ui-element/ui-basic.module').then((m) => m.UiBasicModule)

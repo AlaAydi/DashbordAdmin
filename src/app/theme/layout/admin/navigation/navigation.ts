@@ -56,17 +56,15 @@ export const NavigationItems: NavigationItem[] = [
       },
       {
         id: 'appointments',
-        title: 'Rendez-vous',
+        title: 'Consultations',
         type: 'item',
-        url: '/admin/appointments',
+        url: '/admin/Consultations',
         icon: "fa fa-tint"
       }
     ]
   },
 
-  // =========================
-  // 🟩 FORMULAIRES / TABLEAUX
-  // =========================
+
   {
     id: 'forms_tables',
     title: 'Gestion',
