@@ -1,0 +1,28 @@
+<div class="admin-section">
+  <h2 class="title">Factures</h2>
+  <div class="cards-container">
+    <div class="facture-card" *ngFor="let f of factures">
+      <h3>{{ f.patient }}</h3>
+      <p>Montant: {{ f.montant }} TND</p>
+      <p>Date: {{ f.date }}</p>
+      <p>Status: <span [ngClass]="{'paid': f.status === 'Payé', 'pending': f.status !== 'Payé'}">{{ f.status }}</span></p>
+      <button (click)="openModal(f)">Voir Détails</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-backdrop" *ngIf="showModal">
+  <div class="modal-content">
+    <button class="close-btn" (click)="closeModal()">×</button>
+    <h2>Facture de {{ selectedFacture?.patient }}</h2>
+    <p><strong>Patient:</strong> {{ selectedFacture?.patient }}</p>
+    <p><strong>Adresse:</strong> {{ selectedFacture?.adresse }}</p>
+    <p><strong>Médecin:</strong> {{ selectedFacture?.medecin }}</p>
+    <p><strong>Diagnostic:</strong> {{ selectedFacture?.diagnostique }}</p>
+    <p><strong>Montant:</strong> {{ selectedFacture?.montant }} TND</p>
+    <p><strong>Date:</strong> {{ selectedFacture?.date }}</p>
+    <p><strong>Status:</strong> {{ selectedFacture?.status }}</p>
+    <button class="print-btn" (click)="printFacture()">Imprimer</button>
+  </div>
+</div>

@@ -55,7 +55,7 @@ export const NavigationItems: NavigationItem[] = [
         icon: 'fa fa-user-md'
       },
       {
-        id: 'appointments',
+        id: 'Consultations',
         title: 'Consultations',
         type: 'item',
         url: '/admin/Consultations',
@@ -67,25 +67,24 @@ export const NavigationItems: NavigationItem[] = [
 
   {
     id: 'forms_tables',
-    title: 'Gestion',
+    title: 'Gestion Administrative',
     type: 'group',
     icon: 'icon-group',
     children: [
       {
-        id: 'forms',
-        title: 'Formulaires',
+        id: 'factures',
+        title: 'Factures',
         type: 'item',
-        url: '/forms',
-        icon: "fa fa-address-book"
+        url: '/admin/factures',
+        icon: 'fa fa-receipt'
       },
       {
-        id: 'tables',
-        title: 'Tables',
+        id: 'paiements',
+        title: 'Paiements',
         type: 'item',
-        url: '/tables',
-        icon: 'fa fa-table'
-      
-      }
+        url: '/admin/paiements',
+        icon: 'fa fa-credit-card'
+      },
     ]
   },
 

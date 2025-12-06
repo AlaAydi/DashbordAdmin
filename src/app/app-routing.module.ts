@@ -34,8 +34,13 @@ const routes: Routes = [
   loadComponent: () => import('./theme/layout/admin/doctor/doctor.component').then(m => m.DoctorComponent)
 } , 
 {
-  path: 'admin/Consultations',
-  loadComponent: () => import('./theme/layout/admin/consultation/consultation.component').then(m => m.ConsultationComponent)
+  path: 'admin/factures',
+  loadComponent: () => import('./theme/layout/admin/gestion-administrative/factures/factures.component').then(m => m.FacturesComponent)
+} , 
+
+{
+  path: 'admin/paiements',
+  loadComponent: () => import('./theme/layout/admin/gestion-administrative/paiements/paiements.component').then(m => m.PaiementsComponent)
 } , 
       {
         path: 'component',
