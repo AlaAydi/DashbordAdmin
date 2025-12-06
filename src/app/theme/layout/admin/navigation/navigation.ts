@@ -78,13 +78,7 @@ export const NavigationItems: NavigationItem[] = [
         url: '/admin/factures',
         icon: 'fa fa-receipt'
       },
-      {
-        id: 'paiements',
-        title: 'Paiements',
-        type: 'item',
-        url: '/admin/paiements',
-        icon: 'fa fa-credit-card'
-      },
+  
     ]
   },
 
