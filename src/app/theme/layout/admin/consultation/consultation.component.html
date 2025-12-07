@@ -1,79 +1,53 @@
-<div class="consultation-container">
-
+<div class="consultation-wrapper">
   <div class="header">
-    <h2 class="title">Consultations</h2>
-    <button class="add-btn" (click)="openAddModal()">+ Nouvelle consultation</button>
+    <h2>Consultations</h2>
+    <button class="btn-add" (click)="openAddModal()">Ajouter Consultation</button>
   </div>
 
+  <!-- Filters -->
+  <div class="filters">
+<input type="text" placeholder="Patient" [formControl]="patientControl" (input)="applyFilter()">
+<input type="text" placeholder="Médecin" [formControl]="medecinControl" (input)="applyFilter()">
+<input type="date" placeholder="Date" [formControl]="dateControl" (change)="applyFilter()">
+
+  </div>
+
+  <!-- Table -->
   <div class="table-wrapper">
-    <table class="consultation-table ">
+    <table>
       <thead>
         <tr>
           <th>Patient</th>
           <th>Médecin</th>
           <th>Date</th>
           <th>Diagnostic</th>
-          <th>Actions</th>
         </tr>
       </thead>
-
       <tbody>
-        <tr *ngFor="let c of consultations">
+        <tr *ngFor="let c of filteredConsultations">
           <td>{{ c.patient }}</td>
           <td>{{ c.medecin }}</td>
           <td>{{ c.date }}</td>
           <td>{{ c.diagnostic }}</td>
-
-          <td class="actions">
-            <button class="edit" (click)="openEditModal(c)">Modifier</button>
-            <button class="delete" (click)="deleteConsultation(c.id)">Supprimer</button>
-          </td>
         </tr>
       </tbody>
     </table>
   </div>
+</div>
 
-  <div class="modal" *ngIf="showModal">
-    <div class="modal-content">
-
-      <h3>{{ isEditing ? "Modifier la consultation" : "Ajouter une consultation" }}</h3>
-
-      <div class="form-group">
-        <label>Patient</label>
-        <input type="text" [(ngModel)]="newConsultation.patient">
+<!-- Modal Ajouter Consultation -->
+<div class="modal" *ngIf="showAddModal">
+  <div class="modal-content">
+    <h3>Ajouter Consultation</h3>
+    <form [formGroup]="addForm" (ngSubmit)="addConsultation()">
+      <input type="text" placeholder="Patient" formControlName="patient" required>
+      <input type="text" placeholder="Médecin" formControlName="medecin" required>
+      <input type="date" placeholder="Date" formControlName="date" required>
+      <input type="text" placeholder="Diagnostic" formControlName="diagnostic" required>
+      <div class="modal-buttons">
+        <button type="submit" class="btn-save">Ajouter</button>
+        <button type="button" class="btn-cancel" (click)="closeAddModal()">Annuler</button>
       </div>
-
-      <div class="form-group">
-        <label>Médecin</label>
-        <input type="text" [(ngModel)]="newConsultation.medecin">
-      </div>
-
-      <div class="form-group">
-        <label>Date</label>
-        <input type="date" [(ngModel)]="newConsultation.date">
-      </div>
-
-      <div class="form-group">
-        <label>Notes du médecin</label>
-        <textarea rows="2" [(ngModel)]="newConsultation.notes"></textarea>
-      </div>
-
-      <div class="form-group">
-        <label>Diagnostic</label>
-        <textarea rows="2" [(ngModel)]="newConsultation.diagnostic"></textarea>
-      </div>
-
-      <div class="form-group">
-        <label>Ordonnance</label>
-        <textarea rows="2" [(ngModel)]="newConsultation.ordonnance"></textarea>
-      </div>
-
-      <div class="modal-actions">
-        <button class="save" (click)="saveConsultation()">Enregistrer</button>
-        <button class="cancel" (click)="showModal = false">Annuler</button>
-      </div>
-
-    </div>
+    </form>
   </div>
-
 </div>

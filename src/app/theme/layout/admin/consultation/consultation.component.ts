@@ -1,82 +1,89 @@
 import { NgIf, NgFor } from '@angular/common';
-import { Component  } from '@angular/core';
-import { FormsModule } from '@angular/forms'; 
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms';
+
+interface Consultation {
+  patient: string;
+  medecin: string;
+  date: string;
+  diagnostic: string;
+}
 
 @Component({
   selector: 'app-consultation',
-  standalone : true , 
-  imports: [FormsModule , NgIf , NgFor],
+  standalone: true,
+  imports: [FormsModule, NgIf, NgFor, ReactiveFormsModule],
   templateUrl: './consultation.component.html',
-  styleUrl: './consultation.component.scss'
+  styleUrls: ['./consultation.component.scss']   // <-- corrigé
 })
-export class ConsultationComponent {
-  showModal = false;
-  isEditing = false;
-
-  consultations: any[] = [
-    {
-      id: 1,
-      patient: 'Ali Ben Salem',
-      medecin: 'Dr. Ahmed Ben Salah',
-      notes: 'Douleurs thoraciques',
-      diagnostic: 'Angine stable',
-      ordonnance: 'Aspirine 100mg / jour',
-      date: '2025-02-27'
-    },
-    {
-      id: 2,
-      patient: 'Sana Kefi',
-      medecin: 'Dr. Yasmine Kefi',
-      notes: 'Éruption cutanée',
-      diagnostic: 'Dermatite allergique',
-      ordonnance: 'Crème dermatologique 2x/jour',
-      date: '2025-02-26'
-    }
+export class ConsultationComponent implements OnInit {
+  consultations: Consultation[] = [
+    { patient: 'Ali Ben', medecin: 'Dr. Aymen', date: '2025-12-07', diagnostic: 'Grippe' },
+    { patient: 'Sara Fethi', medecin: 'Dr. Leila', date: '2025-12-06', diagnostic: 'Tension' },
+    { patient: 'Khaled H.', medecin: 'Dr. Aymen', date: '2025-12-05', diagnostic: 'Diabète' }
   ];
 
-  newConsultation: any = {
-    id: 0,
-    patient: '',
-    medecin: '',
-    notes: '',
-    diagnostic: '',
-    ordonnance: '',
-    date: ''
-  };
+  filteredConsultations: Consultation[] = [];
+  filterForm: FormGroup;
+
+  showAddModal = false;
+  addForm: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+    this.filterForm = this.fb.group({
+      patient: [''],
+      medecin: [''],
+      date: ['']
+    });
+
+    this.addForm = this.fb.group({
+      patient: [''],
+      medecin: [''],
+      date: [''],
+      diagnostic: ['']
+    });
+  }
+
+  ngOnInit(): void {
+    this.filteredConsultations = [...this.consultations];
+  }
+
+  applyFilter() {
+    const { patient, medecin, date } = this.filterForm.value;
+    this.filteredConsultations = this.consultations.filter(c =>
+      (!patient || c.patient.toLowerCase().includes(patient.toLowerCase())) &&
+      (!medecin || c.medecin.toLowerCase().includes(medecin.toLowerCase())) &&
+      (!date || c.date === date)
+    );
+  }
 
   openAddModal() {
-    this.isEditing = false;
-    this.showModal = true;
-    this.newConsultation = {
-      id: Date.now(),
-      patient: '',
-      medecin: '',
-      notes: '',
-      diagnostic: '',
-      ordonnance: '',
-      date: ''
-    };
+    this.showAddModal = true;
   }
 
-  openEditModal(c: any) {
-    this.isEditing = true;
-    this.showModal = true;
-    this.newConsultation = { ...c };
+  closeAddModal() {
+    this.showAddModal = false;
   }
 
-  saveConsultation() {
-    if (this.isEditing) {
-      this.consultations = this.consultations.map(x =>
-        x.id === this.newConsultation.id ? this.newConsultation : x
-      );
-    } else {
-      this.consultations.push(this.newConsultation);
+  addConsultation() {
+    if (this.addForm.valid) {
+      this.consultations.push(this.addForm.value);
+      this.applyFilter();
+      this.closeAddModal();
+      this.addForm.reset();
     }
-
-    this.showModal = false;
   }
 
-  deleteConsultation(id: number) {
-    this.consultations = this.consultations.filter(c => c.id !== id);
+  // ✅ getter pour éviter le problème de type null
+  get patientControl(): FormControl {
+    return this.filterForm.get('patient') as FormControl;
+  }
+
+  get medecinControl(): FormControl {
+    return this.filterForm.get('medecin') as FormControl;
+  }
+
+  get dateControl(): FormControl {
+    return this.filterForm.get('date') as FormControl;
   }
 }

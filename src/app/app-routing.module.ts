@@ -30,6 +30,10 @@ const routes: Routes = [
   loadComponent: () => import('./theme/layout/admin/patient/patient.component').then(m => m.PatientComponent)
 } , 
 {
+  path: 'admin/Consultations',
+  loadComponent: () => import('./theme/layout/admin/consultation/consultation.component').then(m => m.ConsultationComponent)
+} , 
+{
   path: 'admin/doctors',
   loadComponent: () => import('./theme/layout/admin/doctor/doctor.component').then(m => m.DoctorComponent)
 } , 
