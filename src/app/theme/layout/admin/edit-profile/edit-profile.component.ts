@@ -5,24 +5,25 @@ import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators } 
 @Component({
   selector: 'app-edit-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
-
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './edit-profile.component.html',
   styleUrl: './edit-profile.component.scss'
 })
 export class EditProfileComponent {
- profileForm = new FormGroup({
+  profileForm = new FormGroup({
     firstname: new FormControl('', Validators.required),
     lastname: new FormControl('', Validators.required),
     email: new FormControl('', [Validators.required, Validators.email]),
     phone: new FormControl(''),
     address: new FormControl(''),
+    role: new FormControl('Administrateur', Validators.required),
+    internalId: new FormControl(''),
   });
 
   onSubmit() {
     if (this.profileForm.valid) {
-      console.log('Profile updated:', this.profileForm.value);
-      alert('Profil mis à jour avec succès !');
+      console.log('Profil admin mis à jour:', this.profileForm.value);
+      alert('Profil administrateur mis à jour avec succès !');
     }
   }
 }

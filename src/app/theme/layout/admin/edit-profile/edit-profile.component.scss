@@ -1,108 +1,117 @@
 .edit-profile-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh; /* prend exactement toute la hauteur de l'écran */
-  background: linear-gradient(135deg, #e0f0ff, #ffffff);
-  padding: 0 20px;
-  box-sizing: border-box;
-  overflow: hidden; /* empêche le scroll */
-}
-
-.profile-card {
-  width: 100%;          /* prend toute la largeur disponible */
-  max-width: 900px;     /* limite pour grands écrans */
-  height: auto;
-  background: #ffffff;
-  padding: 30px 25px;
-  border-radius: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 20px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  box-sizing: border-box;
+  align-items: center;
+}
 
-  h2 {
-    text-align: center;
-    font-size: 28px;
-    font-weight: 700;
-    color: #1a73e8;
-    margin-bottom: 25px;
+.profile-header {
+  text-align: center;
+  margin-bottom: 30px;
+
+  .avatar-wrapper {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 15px;
+    border: 4px solid #fff;
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.1);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
 
-  form {
+  .name {
+    font-size: 26px;
+    font-weight: 700;
+    color: #2e2e40;
+  }
+
+  .role {
+    font-size: 15px;
+    color: #6f6f7a;
+  }
+}
+
+.cards-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+  width: 100%;
+  margin-top: 20px;
+
+  @media (max-width: 850px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  background: white;
+  padding: 25px;
+  border-radius: 14px;
+  box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.06);
+  border: 1px solid #eee;
+
+  .card-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #3a3a4f;
+    margin-bottom: 20px;
+  }
+
+  .form-group {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    margin-bottom: 18px;
 
-    .form-group {
-      display: flex;
-      flex-direction: column;
-
-      label {
-        font-weight: 600;
-        font-size: 14px;
-        color: #333;
-        margin-bottom: 6px;
-      }
-
-      input {
-        padding: 12px;
-        font-size: 16px;
-        border-radius: 10px;
-        border: 1px solid #d1d9e6;
-        transition: border 0.3s;
-
-        &:focus {
-          border-color: #1a73e8;
-          outline: none;
-        }
-      }
+    label {
+      margin-bottom: 6px;
+      font-weight: 500;
+      color: #4d4d5c;
     }
 
-    button {
-      margin-top: 10px;
-      padding: 14px;
-      font-size: 16px;
-      font-weight: 600;
-      border-radius: 12px;
-      border: none;
-      cursor: pointer;
-      color: #fff;
-      background: linear-gradient(to right, #1a73e8, #4285f4);
-      transition: background 0.3s;
+    input {
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: 10px;
+      border: 1px solid #d1d1d8;
+      background: #fafafa;
+      font-size: 15px;
+      transition: 0.3s;
 
-      &:hover {
-        background: linear-gradient(to right, #4285f4, #1a73e8);
-      }
-
-      &:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
+      &:focus {
+        border-color: #4e73df;
+        background: #fff;
+        box-shadow: 0px 0px 8px rgba(78, 115, 223, 0.25);
+        outline: none;
       }
     }
   }
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .profile-card {
-    padding: 25px 20px;
-  }
+.btn-wrapper {
+  margin-top: 30px;
 
-  form .form-group input {
-    font-size: 14px;
-    padding: 10px;
-  }
+  .save-btn {
+    padding: 12px 45px;
+    background: linear-gradient(135deg, #4e73df, #2c4acb);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 17px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: 600;
 
-  button {
-    font-size: 14px;
-    padding: 12px;
-  }
-}
-
-@media (max-width: 480px) {
-  .profile-card {
-    padding: 20px 15px;
-    border-radius: 15px;
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0px 6px 18px rgba(78, 115, 223, 0.4);
+    }
   }
 }
