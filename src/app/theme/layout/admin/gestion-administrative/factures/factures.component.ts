@@ -12,8 +12,8 @@ interface Facture {
 }
 @Component({
   selector: 'app-factures',
-  standalone:true , 
-  imports: [NgClass, NgFor, NgIf],
+  standalone:true ,
+imports: [NgClass, NgFor, NgIf],
   templateUrl: './factures.component.html',
   styleUrl: './factures.component.scss'
 })

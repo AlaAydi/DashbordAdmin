@@ -1,109 +1,155 @@
-.admin-section {
+.factures-wrapper {
   padding: 25px;
 
-  .title {
-    font-size: 26px;
+  .page-title {
+    font-size: 28px;
     font-weight: 700;
     color: #2d2f3a;
-    margin-bottom: 20px;
-  }
-
-  .cards-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-  }
-
-  .facture-card {
-    background: linear-gradient(to right, #0083B0, #00B4DB);
-    color: white;
-    border-radius: 15px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-
-    &:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-    }
-
-    button {
-      background: white;
-      color: #3a57c4;
-      border: none;
-      padding: 8px 15px;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-
-      &:hover {
-        background: #3a57c4;
-        color: white;
-      }
-    }
-
-    .paid { color: #00e676; font-weight: bold; }
-    .pending { color: #ffeb3b; font-weight: bold; }
+    margin-bottom: 25px;
   }
 }
 
-/* Modal styles */
+.factures-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 25px;
+}
+
+.facture-card {
+  background: linear-gradient(135deg, #0093E9, #80D0C7);
+  border-radius: 18px;
+  padding: 25px;
+  color: white;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  &:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.20);
+  }
+
+  .patient-name {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+
+  .facture-info {
+    font-size: 16px;
+    margin-bottom: 20px;
+
+    strong {
+      display: inline-block;
+      width: 90px;
+    }
+  }
+
+  .status {
+    font-weight: bold;
+  }
+
+  .paid {
+    color: #00ff9d;
+  }
+
+  .pending {
+    color: #ffeb3b;
+  }
+
+  .details-btn {
+    background: white;
+    color: #2d2f3a;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: .3s;
+
+    &:hover {
+      background: #2d2f3a;
+      color: white;
+    }
+  }
+}
+
+
 .modal-backdrop {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.6);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 2000;
 }
 
 .modal-content {
+  width: 95%;
+  max-width: 520px;
   background: white;
-  color: #2d2f3a;
-  border-radius: 15px;
+  border-radius: 18px;
   padding: 30px;
-  width: 90%;
-  max-width: 500px;
   position: relative;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
+  box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+  animation: fadeIn .3s ease;
 
-.close-btn {
-  position: absolute;
-  top: 10px; right: 15px;
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-}
+  .modal-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #0083B0;
+  }
 
-.print-btn {
-  background: #0083B0;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  margin-top: 10px;
+  .modal-body p {
+    margin: 6px 0;
+    font-size: 16px;
+  }
 
-  &:hover {
-    background: #00B4DB;
+  .print-btn {
+    margin-top: 15px;
+    background: #0093E9;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+
+    &:hover {
+      background: #007ac7;
+    }
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 26px;
+    cursor: pointer;
+    color: #333;
   }
 }
 
-/* Responsive */
-@media (max-width: 600px) {
-  .cards-container {
-    grid-template-columns: 1fr;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+@media (max-width: 500px) {
+  .facture-card {
+    padding: 20px;
+  }
+
+  .facture-info strong {
+    width: 80px;
   }
 
   .modal-content {
