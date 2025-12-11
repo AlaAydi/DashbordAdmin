@@ -1,1 +1,107 @@
-<p>my-patients works!</p>
+<div class="patient-container">
+  <div class="header">
+    <h2 class="title">Liste des Patients</h2>
+    <button class="btn primary" (click)="openPatientModal()">+ Ajouter Patient</button>
+  </div>
+
+  <div class="patient-table-wrapper">
+    <table class="patient-table">
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Email</th>
+          <th>Adresse</th>
+          <th>Statut</th>
+          <th>Dossier Médical</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of patients" class="table-row">
+          <td>{{ p.name }}</td>
+          <td>{{ p.email }}</td>
+          <td>{{ p.address }}</td>
+          <td>
+            <span class="status" [class.active]="p.status === 'Actif'" [class.inactive]="p.status === 'Inactif'">
+              {{ p.status }}
+            </span>
+          </td>
+          <td>
+            <button class="btn small primary" (click)="openFile(p)">Voir</button>
+            <button class="btn small neutral" (click)="uploadFile(p)">Déposer</button>
+          </td>
+          <td>
+            <button class="btn small info" (click)="openPatientModal(p)">Modifier</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal Vue Dossier -->
+<div class="modal-overlay" *ngIf="showViewModal">
+  <div class="modal-box">
+    <h3 class="modal-title">Dossier Médical</h3>
+    <p *ngIf="!selectedPatient?.file" class="empty-file">Aucun dossier disponible.</p>
+    <iframe *ngIf="selectedPatient?.file" [src]="safeFileUrl" class="file-preview"></iframe>
+    <button class="btn primary" (click)="closeView()">Fermer</button>
+  </div>
+</div>
+
+<!-- Modal Upload Fichier -->
+<div class="modal-overlay" *ngIf="showUploadModal">
+  <div class="modal-box">
+    <h3 class="modal-title">Déposer un dossier médical</h3>
+    <label class="custom-file-upload">
+      <input type="file" (change)="handleFileUpload($event)" />
+      Choisir un fichier
+    </label>
+    <div class="modal-buttons">
+      <button class="btn primary" (click)="saveFile()">Enregistrer</button>
+      <button class="btn neutral" (click)="closeUpload()">Annuler</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Ajouter / Modifier Patient -->
+<div class="modal-overlay" *ngIf="showPatientModal">
+  <div class="modal-box form-modal">
+    <h3 class="modal-title">{{ selectedPatient ? 'Modifier Patient' : 'Ajouter Patient' }}</h3>
+
+    <form (ngSubmit)="savePatient()">
+      <div class="form-group">
+        <input type="text" [(ngModel)]="selectedPatientTemp.name" name="name" required />
+        <label>Nom</label>
+      </div>
+
+      <div class="form-group">
+        <input type="email" [(ngModel)]="selectedPatientTemp.email" name="email" required />
+        <label>Email</label>
+      </div>
+
+      <div class="form-group">
+        <input type="text" [(ngModel)]="selectedPatientTemp.address" name="address" required />
+        <label>Adresse</label>
+      </div>
+
+      <div class="form-group">
+        <select [(ngModel)]="selectedPatientTemp.status" name="status" required>
+          <option value="Actif">Actif</option>
+          <option value="Inactif">Inactif</option>
+        </select>
+        <label>Statut</label>
+      </div>
+
+      <label class="custom-file-upload">
+        <input type="file" (change)="handleFileUpload($event)" />
+        Choisir un dossier médical
+      </label>
+
+      <div class="modal-buttons">
+        <button type="submit" class="btn primary">Enregistrer</button>
+        <button type="button" class="btn neutral" (click)="closePatientModal()">Annuler</button>
+      </div>
+    </form>
+  </div>
+</div>
