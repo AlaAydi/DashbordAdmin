@@ -1,1 +1,68 @@
-<p>my-consultations works!</p>
+<div class="consultation-wrapper">
+
+  <div class="header">
+    <h2><i class="bx bx-health"></i> Consultations</h2>
+    <button class="btn-add" (click)="openAddModal()">
+      <i class="bx bx-plus"></i> Ajouter Consultation
+    </button>
+  </div>
+
+  <div class="filters">
+    <div class="field">
+      <i class="bx bx-user"></i>
+      <input type="text" placeholder="Patient" [formControl]="patientControl" (input)="applyFilter()">
+    </div>
+
+    <div class="field">
+      <i class="bx bx-user-voice"></i>
+      <input type="text" placeholder="Médecin" [formControl]="medecinControl" (input)="applyFilter()">
+    </div>
+
+    <div class="field">
+      <i class="bx bx-calendar"></i>
+      <input type="date" [formControl]="dateControl" (change)="applyFilter()">
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Patient</th>
+          <th>Médecin</th>
+          <th>Date</th>
+          <th>Diagnostic</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let c of filteredConsultations">
+          <td>{{ c.patient }}</td>
+          <td>{{ c.medecin }}</td>
+          <td>{{ c.date }}</td>
+          <td>{{ c.diagnostic }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal" *ngIf="showAddModal">
+  <div class="modal-content">
+    <h3><i class="bx bx-plus-medical"></i> Ajouter Consultation</h3>
+
+    <form [formGroup]="addForm" (ngSubmit)="addConsultation()">
+
+      <input type="text" placeholder="Patient" formControlName="patient">
+      <input type="text" placeholder="Médecin" formControlName="medecin">
+      <input type="date" formControlName="date">
+      <input type="text" placeholder="Diagnostic" formControlName="diagnostic">
+
+      <div class="modal-buttons">
+        <button type="submit" class="btn-save">Ajouter</button>
+        <button type="button" class="btn-cancel" (click)="closeAddModal()">Annuler</button>
+      </div>
+    </form>
+  </div>
+</div>

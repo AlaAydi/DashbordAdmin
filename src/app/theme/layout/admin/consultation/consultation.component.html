@@ -4,7 +4,6 @@
     <button class="btn-add" (click)="openAddModal()">Ajouter Consultation</button>
   </div>
 
-  <!-- Filters -->
   <div class="filters">
 <input type="text" placeholder="Patient" [formControl]="patientControl" (input)="applyFilter()">
 <input type="text" placeholder="Médecin" [formControl]="medecinControl" (input)="applyFilter()">
@@ -12,7 +11,6 @@
 
   </div>
 
-  <!-- Table -->
   <div class="table-wrapper">
     <table>
       <thead>
@@ -35,7 +33,6 @@
   </div>
 </div>
 
-<!-- Modal Ajouter Consultation -->
 <div class="modal" *ngIf="showAddModal">
   <div class="modal-content">
     <h3>Ajouter Consultation</h3>

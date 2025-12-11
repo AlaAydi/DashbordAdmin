@@ -74,7 +74,6 @@ export class ConsultationComponent implements OnInit {
     }
   }
 
-  // ✅ getter pour éviter le problème de type null
   get patientControl(): FormControl {
     return this.filterForm.get('patient') as FormControl;
   }
