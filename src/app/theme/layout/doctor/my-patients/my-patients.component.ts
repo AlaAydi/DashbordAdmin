@@ -5,40 +5,48 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-my-patients',
-  standalone : true ,
+  standalone: true,
   imports: [CommonModule, NgIf, NgFor, FormsModule],
   templateUrl: './my-patients.component.html',
   styleUrl: './my-patients.component.scss'
 })
 export class MyPatientsComponent {
-showViewModal = false;
+
+  showViewModal = false;
   showUploadModal = false;
   showPatientModal = false;
 
-  // Patient sélectionné
+  showNotesModal = false;
+  showMessagesModal = false;
+  showClaimsModal = false;
+
   selectedPatient: any = null;
   selectedPatientTemp: any = null;
+
+  notesContent = "";
+  messageContent = "";
+  claimContent = "";
 
   fileToUpload: any = null;
   safeFileUrl: SafeResourceUrl | null = null;
 
-  // Liste des patients
   patients = [
-    { name: "Ala Ben Salem", email: "ala@gmail.com", address: "Tunis, Centre Urbain", status: "Actif", file: null },
-    { name: "Mohamed Jlassi", email: "mj@gmail.com", address: "Ariana, Ennasr", status: "Actif", file: null },
-    { name: "Selem Ben Youssef", email: "sarra@gmail.com", address: "Sousse", status: "Inactif", file: null }
+    { name: "Ala Ben Salem", email: "ala@gmail.com", address: "Tunis", status: "Actif", file: null },
+    { name: "Mohamed Jlassi", email: "mj@gmail.com", address: "Ariana", status: "Actif", file: null },
+    { name: "Selem Ben Youssef", email: "selem@gmail.com", address: "Sousse", status: "Inactif", file: null }
   ];
 
   constructor(private sanitizer: DomSanitizer) {}
 
-  /** ---------------- MODAL VUE Dossier ---------------- */
   openFile(patient: any) {
     this.selectedPatient = patient;
+
     if (patient.file) {
       this.safeFileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(patient.file);
     } else {
       this.safeFileUrl = null;
     }
+
     this.showViewModal = true;
   }
 
@@ -46,7 +54,6 @@ showViewModal = false;
     this.showViewModal = false;
   }
 
-  /** ---------------- MODAL UPLOAD ---------------- */
   uploadFile(patient: any) {
     this.selectedPatient = patient;
     this.fileToUpload = null;
@@ -65,31 +72,28 @@ showViewModal = false;
     if (this.fileToUpload) {
       this.selectedPatient.file = URL.createObjectURL(this.fileToUpload);
       this.safeFileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.selectedPatient.file);
+
       this.fileToUpload = null;
       this.closeUpload();
       this.showViewModal = true;
     }
   }
 
-  /** ---------------- MODAL AJOUT / MODIFICATION PATIENT ---------------- */
   openPatientModal(patient?: any) {
     if (patient) {
-      // Modifier
       this.selectedPatient = patient;
       this.selectedPatientTemp = { ...patient };
     } else {
-      // Ajouter
       this.selectedPatient = null;
-      this.selectedPatientTemp = { name:'', email:'', address:'', status:'Actif', file: null };
+      this.selectedPatientTemp = { name: '', email: '', address: '', status: 'Actif', file: null };
     }
+
     this.fileToUpload = null;
     this.showPatientModal = true;
   }
 
   closePatientModal() {
     this.showPatientModal = false;
-    this.selectedPatientTemp = null;
-    this.fileToUpload = null;
   }
 
   savePatient() {
@@ -98,15 +102,14 @@ showViewModal = false;
       return;
     }
 
-    if(this.selectedPatient){
-      // Modifier patient existant
+    if (this.selectedPatient) {
       Object.assign(this.selectedPatient, this.selectedPatientTemp);
-      if(this.fileToUpload){
+
+      if (this.fileToUpload) {
         this.selectedPatient.file = URL.createObjectURL(this.fileToUpload);
       }
     } else {
-      // Ajouter nouveau patient
-      if(this.fileToUpload){
+      if (this.fileToUpload) {
         this.selectedPatientTemp.file = URL.createObjectURL(this.fileToUpload);
       }
       this.patients.push(this.selectedPatientTemp);
@@ -114,6 +117,58 @@ showViewModal = false;
 
     this.closePatientModal();
   }
+
+  openNotes(p: any) {
+    this.selectedPatient = p;
+    this.notesContent = p.notes || "";
+    this.showNotesModal = true;
+  }
+
+  saveNotes() {
+    this.selectedPatient.notes = this.notesContent;
+    this.closeNotes();
+  }
+
+  closeNotes() {
+    this.showNotesModal = false;
+    this.notesContent = "";
+  }
+
+  openMessages(p: any) {
+    this.selectedPatient = p;
+    this.messageContent = "";
+    this.showMessagesModal = true;
+  }
+
+  saveMessage() {
+    if (!this.selectedPatient.messages) this.selectedPatient.messages = [];
+    this.selectedPatient.messages.push(this.messageContent);
+    this.closeMessages();
+  }
+
+  closeMessages() {
+    this.showMessagesModal = false;
+    this.messageContent = "";
+  }
+
+  openClaims(p: any) {
+    this.selectedPatient = p;
+    this.claimContent = "";
+    this.showClaimsModal = true;
+  }
+
+  saveClaim() {
+    if (!this.selectedPatient.claims) this.selectedPatient.claims = [];
+    this.selectedPatient.claims.push({
+      content: this.claimContent,
+      date: new Date()
+    });
+
+    this.closeClaims();
+  }
+
+  closeClaims() {
+    this.showClaimsModal = false;
+    this.claimContent = "";
+  }
 }
-
-

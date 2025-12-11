@@ -1,6 +1,6 @@
 <div class="patient-container">
   <div class="header">
-    <h2 class="title">Liste des Patients</h2>
+    <h2 class="title">Patients du Doctteur</h2>
     <button class="btn primary" (click)="openPatientModal()">+ Ajouter Patient</button>
   </div>
 
@@ -16,47 +16,69 @@
           <th>Actions</th>
         </tr>
       </thead>
+
       <tbody>
         <tr *ngFor="let p of patients" class="table-row">
           <td>{{ p.name }}</td>
           <td>{{ p.email }}</td>
           <td>{{ p.address }}</td>
+
+          <!-- Status -->
           <td>
             <span class="status" [class.active]="p.status === 'Actif'" [class.inactive]="p.status === 'Inactif'">
               {{ p.status }}
             </span>
           </td>
+
           <td>
             <button class="btn small primary" (click)="openFile(p)">Voir</button>
             <button class="btn small neutral" (click)="uploadFile(p)">Déposer</button>
           </td>
-          <td>
-            <button class="btn small info" (click)="openPatientModal(p)">Modifier</button>
-          </td>
+
+<td class="actions-cell">
+  <button class="icon-btn info" (click)="openPatientModal(p)">
+<i class="fa-solid fa-info"></i>  </button>
+
+  <button class="icon-btn success" (click)="openNotes(p)">
+<i class="fa-solid fa-check"></i>  </button>
+
+  <button class="icon-btn warn" (click)="openMessages(p)">
+    <i class="fa fa-exclamation-circle"></i>
+  </button>
+
+  <button class="icon-btn danger" (click)="openClaims(p)">
+    <i class="fa fa-exclamation"></i>
+  </button>
+</td>
+
         </tr>
       </tbody>
     </table>
   </div>
 </div>
 
-<!-- Modal Vue Dossier -->
 <div class="modal-overlay" *ngIf="showViewModal">
   <div class="modal-box">
     <h3 class="modal-title">Dossier Médical</h3>
+
     <p *ngIf="!selectedPatient?.file" class="empty-file">Aucun dossier disponible.</p>
+
     <iframe *ngIf="selectedPatient?.file" [src]="safeFileUrl" class="file-preview"></iframe>
+
     <button class="btn primary" (click)="closeView()">Fermer</button>
   </div>
 </div>
 
-<!-- Modal Upload Fichier -->
+<!-- Modal Upload -->
 <div class="modal-overlay" *ngIf="showUploadModal">
   <div class="modal-box">
     <h3 class="modal-title">Déposer un dossier médical</h3>
+
     <label class="custom-file-upload">
       <input type="file" (change)="handleFileUpload($event)" />
       Choisir un fichier
     </label>
+
     <div class="modal-buttons">
       <button class="btn primary" (click)="saveFile()">Enregistrer</button>
       <button class="btn neutral" (click)="closeUpload()">Annuler</button>
@@ -103,5 +125,46 @@
         <button type="button" class="btn neutral" (click)="closePatientModal()">Annuler</button>
       </div>
     </form>
+  </div>
+</div>
+
+<div class="modal-overlay" *ngIf="showNotesModal">
+  <div class="modal-box">
+    <h3 class="modal-title">Remarques du médecin</h3>
+
+    <textarea [(ngModel)]="notesContent" rows="6"></textarea>
+
+    <div class="modal-buttons">
+      <button class="btn primary" (click)="saveNotes()">Enregistrer</button>
+      <button class="btn neutral" (click)="closeNotes()">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Messages -->
+<div class="modal-overlay" *ngIf="showMessagesModal">
+  <div class="modal-box">
+    <h3 class="modal-title">Messages</h3>
+
+    <textarea [(ngModel)]="messageContent" rows="6"></textarea>
+
+    <div class="modal-buttons">
+      <button class="btn info" (click)="saveMessage()">Envoyer</button>
+      <button class="btn neutral" (click)="closeMessages()">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Réclamations -->
+<div class="modal-overlay" *ngIf="showClaimsModal">
+  <div class="modal-box">
+    <h3 class="modal-title">Réclamation</h3>
+
+    <textarea [(ngModel)]="claimContent" rows="6"></textarea>
+
+    <div class="modal-buttons">
+      <button class="btn danger" (click)="saveClaim()">Envoyer Réclamation</button>
+      <button class="btn neutral" (click)="closeClaims()">Fermer</button>
+    </div>
   </div>
 </div>
