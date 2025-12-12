@@ -1,29 +1,51 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; // pour ngModel
 import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { EventInput, CalendarOptions, EventApi } from '@fullcalendar/core';
+import { EventApi, CalendarOptions } from '@fullcalendar/core';
 
 @Component({
   selector: 'app-calendar',
-  standalone:true,
-  imports: [CommonModule, FullCalendarModule, FormsModule],
+  standalone: true,
+  imports: [CommonModule, FullCalendarModule],
   templateUrl: './calendar.component.html',
-  styleUrl: './calendar.component.scss' ,
-    schemas:  [CUSTOM_ELEMENTS_SCHEMA]
+  styleUrl: './calendar.component.scss',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class CalendarComponent {
   showModal = false;
-  modalTitle = '';
-  modalAction: 'add' | 'edit' = 'add';
-  modalEvent: EventApi | null = null;
-  patientName = '';
+
+  selectedEvent: any = null;
+  patientHistory: any[] = [];
+
+  consultations = [
+    {
+      id: '1',
+      patient: 'John Doe',
+      phone: '22 000 111',
+      email: 'john@example.com',
+      remark: 'Douleur au dos',
+      start: '2025-12-04T10:00:00'
+    },
+    {
+      id: '2',
+      patient: 'John Doe',
+      remark: 'Consultation de suivi',
+      start: '2025-11-24T10:00:00'
+    },
+    {
+      id: '3',
+      patient: 'Sarah Smith',
+      phone: '24 800 321',
+      email: 'sarah@example.com',
+      remark: '',
+      start: '2025-12-05T14:30:00'
+    }
+  ];
 
   calendarOptions: CalendarOptions = {
-
     plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
     initialView: 'dayGridMonth',
     headerToolbar: {
@@ -31,75 +53,41 @@ export class CalendarComponent {
       center: 'title',
       right: 'dayGridMonth,timeGridWeek,timeGridDay'
     },
-    editable: true,
-    selectable: true,
-    events: [
-      { id: '1', title: 'Rendez-vous John Doe', start: '2025-12-04T10:00:00' },
-      { id: '2', title: 'Rendez-vous Jane Smith', start: '2025-12-05T14:30:00' }
-    ],
-    dateClick: this.handleDateClick.bind(this),
-    eventClick: this.handleEventClick.bind(this),
-    eventDrop: this.handleEventDrop.bind(this)
+    events: [],
+    editable: false,
+    selectable: false,
+    eventClick: this.handleEventClick.bind(this)
   };
 
-  // Ajouter un rendez-vous (ouvre modal)
-  handleDateClick(arg: any) {
-    const startDate = arg.dateStr || new Date().toISOString();
-    this.modalAction = 'add';
-    this.modalTitle = `Ajouter un rendez-vous le ${startDate}`;
-    this.patientName = '';
-    this.modalEvent = { start: startDate } as any;
-    this.showModal = true;
+  constructor() {
+    this.calendarOptions.events = this.consultations.map(c => ({
+      id: c.id,
+      title: c.patient,
+      start: c.start
+    }));
   }
 
-  // Modifier/Supprimer un rendez-vous (ouvre modal)
-  handleEventClick(arg: { event: EventApi }) {
-    this.modalAction = 'edit';
-    this.modalTitle = `Modifier ou supprimer le rendez-vous`;
-    this.patientName = arg.event.title;
-    this.modalEvent = arg.event;
-    this.showModal = true;
-  }
+handleEventClick(arg: { event: EventApi }) {
+  const data = this.consultations.find(c => c.id === arg.event.id);
 
-  // Enregistrer un rendez-vous
-  saveEvent() {
-    if (!this.patientName.trim()) return;
+  if (!data) return;
 
-    if (this.modalAction === 'add') {
-      const newEvent: EventInput = {
-        id: String(new Date().getTime()),
-        title: this.patientName,
-        start: this.modalEvent?.start || new Date()
-      };
-      this.calendarOptions.events = [
-        ...(this.calendarOptions.events as EventInput[]),
-        newEvent
-      ];
-    } else if (this.modalAction === 'edit' && this.modalEvent) {
-      this.modalEvent.setProp('title', this.patientName);
-    }
+  this.selectedEvent = data;
 
-    this.closeModal();
-  }
+  this.patientHistory = this.consultations
+    .filter(c => c.patient === data.patient && c.id !== data.id)
+    .map(c => ({
+      date: c.start,
+      remark: c.remark
+    }));
 
-  // Supprimer un rendez-vous
-  deleteEvent() {
-    if (this.modalAction === 'edit' && this.modalEvent) {
-      if (confirm('Voulez-vous vraiment supprimer ce rendez-vous ?')) {
-        this.modalEvent.remove();
-      }
-    }
-    this.closeModal();
-  }
+  this.showModal = true;
+}
 
 
   closeModal() {
     this.showModal = false;
-    this.modalEvent = null;
-    this.patientName = '';
-  }
-
-  handleEventDrop(arg: { event: EventApi }) {
-    alert(`Rendez-vous déplacé à : ${arg.event.start?.toLocaleString()}`);
+    this.selectedEvent = null;
+    this.patientHistory = [];
   }
 }

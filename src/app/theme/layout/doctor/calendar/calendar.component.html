@@ -1,33 +1,39 @@
 <div class="calendar-container">
   <full-calendar [options]="calendarOptions"></full-calendar>
 
-  <!-- Modal moderne -->
-<!-- Modal moderne premium -->
-<div class="modern-modal-backdrop" *ngIf="showModal">
-  <div class="modern-modal">
-    <h2 class="modal-title">{{ modalTitle }}</h2>
+  <div class="modal-backdrop" *ngIf="showModal">
+    <div class="modal-box">
 
-    <input
-      type="text"
-      [(ngModel)]="patientName"
-      class="modal-input"
-      placeholder="Nom du patient"
-    />
+      <h2 class="modal-title">Consultation</h2>
 
-    <div class="modal-buttons">
-      <button class="modern-btn primary" (click)="saveEvent()">Enregistrer</button>
+      <div class="info-line">
+        <span class="label">Patient :</span>
+        <span class="value">{{ selectedEvent?.patient }}</span>
+      </div>
 
-      <button
-        class="modern-btn danger"
-        *ngIf="modalAction === 'edit'"
-        (click)="deleteEvent()"
-      >
-        Supprimer
-      </button>
+      <div class="info-line">
+        <span class="label">Téléphone :</span>
+        <span class="value">{{ selectedEvent?.phone }}</span>
+      </div>
 
-      <button class="modern-btn neutral" (click)="closeModal()">Annuler</button>
+      <div class="info-line">
+        <span class="label">Email :</span>
+        <span class="value">{{ selectedEvent?.email }}</span>
+      </div>
+
+      <div class="info-block">
+        <h3>Remarque</h3>
+        <p>{{ selectedEvent?.remark || 'Aucune remarque' }}</p>
+      </div>
+
+      <div class="info-block" *ngIf="patientHistory.length > 0">
+        <h3>Historique</h3>
+        <div class="history-item" *ngFor="let h of patientHistory">
+          <p>{{ h.date }} – {{ h.remark || 'Aucune remarque' }}</p>
+        </div>
+      </div>
+
+      <button class="modern-btn neutral" (click)="closeModal()">Fermer</button>
     </div>
   </div>
-</div>
-
 </div>

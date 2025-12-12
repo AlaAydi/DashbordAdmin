@@ -1,7 +1,6 @@
 <div class="patient-container">
   <div class="header">
-    <h2 class="title">Patients du Doctteur</h2>
-    <button class="btn primary" (click)="openPatientModal()">+ Ajouter Patient</button>
+    <h2 class="title">Patients du Docteur</h2>
   </div>
 
   <div class="patient-table-wrapper">
@@ -23,7 +22,6 @@
           <td>{{ p.email }}</td>
           <td>{{ p.address }}</td>
 
-          <!-- Status -->
           <td>
             <span class="status" [class.active]="p.status === 'Actif'" [class.inactive]="p.status === 'Inactif'">
               {{ p.status }}
@@ -69,7 +67,6 @@
   </div>
 </div>
 
-<!-- Modal Upload -->
 <div class="modal-overlay" *ngIf="showUploadModal">
   <div class="modal-box">
     <h3 class="modal-title">Déposer un dossier médical</h3>
@@ -86,7 +83,6 @@
   </div>
 </div>
 
-<!-- Modal Ajouter / Modifier Patient -->
 <div class="modal-overlay" *ngIf="showPatientModal">
   <div class="modal-box form-modal">
     <h3 class="modal-title">{{ selectedPatient ? 'Modifier Patient' : 'Ajouter Patient' }}</h3>

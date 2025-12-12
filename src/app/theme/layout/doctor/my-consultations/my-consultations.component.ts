@@ -59,9 +59,7 @@ export class MyConsultationsComponent implements OnInit {
     );
   }
 
-  openAddModal() {
-    this.showAddModal = true;
-  }
+
 
   closeAddModal() {
     this.showAddModal = false;
