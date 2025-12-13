@@ -3,7 +3,6 @@
 
   <div class="modal-backdrop" *ngIf="showModal">
     <div class="modal-box glass">
-
       <div class="modal-header">
         <div class="modal-icon">
           <i class="fa fa-calendar-check"></i>
@@ -15,23 +14,19 @@
       </div>
 
       <div class="modal-body">
-
         <ng-container *ngIf="modalMode === 'view'">
           <div class="info-row">
             <span>Docteur</span>
             <strong>{{ selectedEvent?.doctor }}</strong>
           </div>
-
           <div class="info-row">
             <span>Date</span>
             <strong>{{ selectedEvent?.date | date:'fullDate' }}</strong>
           </div>
-
           <div class="info-row">
             <span>Heure</span>
             <strong>{{ selectedEvent?.time }}</strong>
           </div>
-
           <div class="info-card">
             <h4>Motif</h4>
             <p>{{ selectedEvent?.remark }}</p>
@@ -39,7 +34,6 @@
         </ng-container>
 
         <ng-container *ngIf="modalMode === 'add'">
-
           <div class="form-group">
             <label>Docteur</label>
             <select [(ngModel)]="newAppointment.doctor" (change)="checkAvailability()">
@@ -50,14 +44,10 @@
 
           <div class="form-group time-group">
             <label>Heure</label>
-            <div class="time-input-wrapper">
-              <i class="fa fa-clock"></i>
-              <input
-                type="time"
-                [(ngModel)]="newAppointment.time"
-                (change)="checkAvailability()"
-              />
-            </div>
+            <select [(ngModel)]="newAppointment.time" (change)="checkAvailability()">
+              <option value="">Choisir un créneau</option>
+              <option *ngFor="let t of getAvailableTimes()" [value]="t">{{ t }}</option>
+            </select>
           </div>
 
           <div class="form-group">
@@ -66,16 +56,13 @@
           </div>
 
           <div class="availability-error" *ngIf="conflict">
-            Ce docteur a déjà un rendez-vous à cette heure
+            Ce créneau est déjà réservé
           </div>
-
         </ng-container>
-
       </div>
 
       <div class="modal-footer">
         <button class="btn ghost" (click)="closeModal()">Fermer</button>
-
         <button
           *ngIf="modalMode === 'add'"
           class="btn primary"
@@ -83,7 +70,6 @@
           (click)="confirmAdd()">
           Confirmer
         </button>
-
         <button
           *ngIf="modalMode === 'view'"
           class="btn danger"
@@ -91,7 +77,6 @@
           Annuler RDV
         </button>
       </div>
-
     </div>
   </div>
 </div>

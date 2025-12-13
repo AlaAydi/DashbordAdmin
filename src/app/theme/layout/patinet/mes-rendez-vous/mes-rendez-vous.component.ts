@@ -17,6 +17,11 @@ export class MesRendezVousComponent {
 
   doctors = ['Dr Ahmed', 'Dr Sarah'];
 
+  doctorSchedules: { [key: string]: { start: string, end: string } } = {
+    'Dr Ahmed': { start: '09:00', end: '17:00' },
+    'Dr Sarah': { start: '10:00', end: '16:00' }
+  };
+
   consultations = [
     {
       id: '1',
@@ -55,7 +60,7 @@ export class MesRendezVousComponent {
   mapEvents() {
     return this.consultations.map(c => {
       const start = new Date(`${c.date}T${c.time}`);
-      const end = new Date(start.getTime() + 60 * 60000); // +1h
+      const end = new Date(start.getTime() + 60 * 60000);
       return {
         id: c.id,
         title: `${c.doctor} (${c.time})`,
@@ -81,6 +86,35 @@ export class MesRendezVousComponent {
     this.showModal = true;
   }
 
+  getAvailableTimes(): string[] {
+    if (!this.newAppointment.doctor || !this.selectedDate) return [];
+
+    const schedule = this.doctorSchedules[this.newAppointment.doctor];
+    if (!schedule) return [];
+
+    const startHour = Number(schedule.start.split(':')[0]);
+    const startMin = Number(schedule.start.split(':')[1]);
+    const endHour = Number(schedule.end.split(':')[0]);
+    const endMin = Number(schedule.end.split(':')[1]);
+
+    const availableTimes: string[] = [];
+
+    for (let h = startHour; h <= endHour; h++) {
+      for (let m = 0; m < 60; m += 30) {
+        if (h === endHour && m > endMin) continue;
+        const timeStr = `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}`;
+        const conflict = this.consultations.some(c =>
+          c.doctor === this.newAppointment.doctor &&
+          c.date === this.selectedDate &&
+          c.time === timeStr
+        );
+        if (!conflict) availableTimes.push(timeStr);
+      }
+    }
+
+    return availableTimes;
+  }
+
   checkAvailability() {
     if (!this.newAppointment.doctor || !this.newAppointment.time) {
       this.conflict = false;
@@ -88,14 +122,12 @@ export class MesRendezVousComponent {
     }
 
     const selectedStart = new Date(`${this.selectedDate}T${this.newAppointment.time}`);
-    const selectedEnd = new Date(selectedStart.getTime() + 60 * 60000); // +1h
+    const selectedEnd = new Date(selectedStart.getTime() + 60 * 60000);
 
     this.conflict = this.consultations.some(c => {
       if (c.doctor !== this.newAppointment.doctor || c.date !== this.selectedDate) return false;
-
       const existingStart = new Date(`${c.date}T${c.time}`);
       const existingEnd = new Date(existingStart.getTime() + 60 * 60000);
-
       return (selectedStart < existingEnd) && (selectedEnd > existingStart);
     });
   }
@@ -115,24 +147,19 @@ export class MesRendezVousComponent {
     this.closeModal();
   }
 
-cancelAppointment() {
-  if (!this.selectedEvent) return;
-
-  const now = new Date();
-  const appointmentDateTime = new Date(`${this.selectedEvent.date}T${this.selectedEvent.time}`);
-
-  const diffHours = (appointmentDateTime.getTime() - now.getTime()) / (1000 * 60 * 60);
-
-  if (diffHours < 24) {
-    alert('Vous ne pouvez pas annuler ce rendez-vous moins de 24 heures avant.');
-    return;
+  cancelAppointment() {
+    if (!this.selectedEvent) return;
+    const now = new Date();
+    const appointmentDateTime = new Date(`${this.selectedEvent.date}T${this.selectedEvent.time}`);
+    const diffHours = (appointmentDateTime.getTime() - now.getTime()) / (1000 * 60 * 60);
+    if (diffHours < 24) {
+      alert('Vous ne pouvez pas annuler ce rendez-vous moins de 24 heures avant.');
+      return;
+    }
+    this.consultations = this.consultations.filter(c => c !== this.selectedEvent);
+    this.calendarOptions.events = this.mapEvents();
+    this.closeModal();
   }
-
-  this.consultations = this.consultations.filter(c => c !== this.selectedEvent);
-  this.calendarOptions.events = this.mapEvents();
-  this.closeModal();
-}
-
 
   closeModal() {
     this.showModal = false;
