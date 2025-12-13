@@ -1,0 +1,167 @@
+.calendar-container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0,0,0,.12);
+}
+
+::ng-deep .fc-event {
+  background: linear-gradient(135deg,#1976d2,#42a5f5) !important;
+  border-radius: 14px;
+  color: #fff;
+  font-weight: 600;
+  padding: 4px 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+::ng-deep .fc-event:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(10,20,40,.55);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.modal-box {
+  width: 450px;
+  max-width: 95%;
+  padding: 28px;
+  border-radius: 24px;
+  background: rgba(255,255,255,.95);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 25px 60px rgba(0,0,0,.25);
+  animation: scaleUp .35s ease;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.modal-icon {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg,#1976d2,#42a5f5);
+  color: #fff;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px dashed #ddd;
+}
+
+.info-card {
+  background: #f0f4ff;
+  padding: 16px;
+  border-radius: 16px;
+  margin-top: 16px;
+}
+
+.time-input-wrapper {
+  position: relative;
+
+  i {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #1976d2;
+    font-size: 16px;
+  }
+
+  input[type="time"] {
+    width: 100%;
+    padding: 12px 14px 12px 42px;
+    border-radius: 14px;
+    border: 1px solid #ddd;
+    font-size: 15px;
+    font-weight: 600;
+    background: linear-gradient(180deg,#fff,#f8faff);
+    transition: all .25s ease;
+    cursor: pointer;
+  }
+
+  input[type="time"]:focus {
+    outline: none;
+    border-color: #1976d2;
+    box-shadow: 0 0 0 3px rgba(25,118,210,.15);
+    background: #fff;
+  }
+}
+
+select, textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+}
+
+.availability-error {
+  background: #fdecea;
+  color: #d32f2f;
+  padding: 10px;
+  border-radius: 12px;
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.btn {
+  padding: 10px 18px;
+  border-radius: 12px;
+  border: none;
+  font-weight: 600;
+}
+
+.primary {
+  background: linear-gradient(135deg,#1976d2,#42a5f5);
+  color: #fff;
+}
+
+.primary:disabled {
+  opacity: .4;
+}
+
+.danger {
+  background: #d32f2f;
+  color: #fff;
+}
+
+.ghost {
+  background: transparent;
+}
+
+@keyframes scaleUp {
+  from { transform: scale(.9); opacity: 0 }
+  to { transform: scale(1); opacity: 1 }
+}
+
+@media (max-width:500px) {
+  .modal-box { width: 92%; }
+  .time-input-wrapper input[type="time"] { font-size: 16px; padding: 14px 14px 14px 44px; }
+}
