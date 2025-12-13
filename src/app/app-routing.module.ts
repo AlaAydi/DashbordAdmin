@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminComponent } from './theme/layout/admin/admin.component';
 import { GuestComponent } from './theme/layout/guest/guest.component';
 import { DoctorComponent } from './theme/layout/doctor/doctor.component';
+import { PatientComponent } from './theme/layout/patinet/patient/patient.component';
 
 const routes: Routes = [
   {
@@ -104,6 +105,59 @@ const routes: Routes = [
     }
   ]
 },
+
+{
+  path: 'patient',
+  component: PatientComponent,
+  children: [
+
+    { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+
+    {
+      path: 'dashboard',
+      loadComponent: () =>
+        import('./theme/layout/patinet/dashbord/dashbord.component')
+          .then(m => m.DashbordComponent2)
+    },
+
+    {
+      path: 'my-rendez-vous',
+      loadComponent: () =>
+        import('./theme/layout/patinet/mes-rendez-vous/mes-rendez-vous.component')
+          .then(m => m.MesRendezVousComponent)
+    },
+
+    {
+      path: 'my-dossier-medical',
+      loadComponent: () =>
+        import('./theme/layout/patinet/dossier-medicale/dossier-medicale.component')
+          .then(m => m.DossierMedicaleComponent)
+    },
+
+    {
+      path: 'factures',
+      loadComponent: () =>
+        import('./theme/layout/patinet/paiement-factures/paiement-factures.component')
+          .then(m => m.PaiementFacturesComponent)
+    },
+
+    {
+      path: 'reclamations',
+      loadComponent: () =>
+        import('./theme/layout/patinet/reclamations/reclamations.component')
+          .then(m => m.ReclamationsComponent)
+    },
+
+    {
+      path: 'profile',
+      loadComponent: () =>
+        import('./theme/layout/patinet/parametres/parametres.component')
+          .then(m => m.ParametresComponent)
+    }
+  ]
+}
+
+ ,
 
   {
     path: '',
